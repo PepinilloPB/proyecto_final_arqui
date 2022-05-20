@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: usuario
+          uri: lb://USUARIO
+          predicates:
+            - Path=/usuario/**
+          filters:
+            - RewritePath=/usuario/(?<remaining>.*), /$\{remaining}
+        - id: transaccion
+          uri: lb://TRANSACCION
+          predicates:
+            - Path=/transaccion/**
+          filters:
+            - RewritePath=/transaccion/(?<remaining>.*), /$\{remaining}
+        - id: cuenta
+          uri: lb://CUENTA
+          predicates:
+            - Path=/cuenta/**
+          filters:
+            - RewritePath=/cuenta/(?<remaining>.*), /$\{remaining}
+
+server:
+  port: 9000

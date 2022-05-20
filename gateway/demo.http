@@ -1,0 +1,13 @@
+#####
+GET http://localhost:9000/usuario/api/usuario
+Content-Type: application/json
+
+
+#####
+GET http://localhost:9000/transaccion/api/transaccion
+Content-Type: application/json
+
+
+#####
+GET http://localhost:9000/cuenta/api/cuenta
+Content-Type: application/json
