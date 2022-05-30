@@ -16,6 +16,7 @@ import javax.persistence.Table;
 | id      | bigint(20) unsigned | NO   | PRI | NULL              | auto_increment |
 | coid    | int(11)             | YES  |     | NULL              |                |
 | cdid    | int(11)             | YES  |     | NULL              |                |
+| eid     | int(11)             | YES  |     | NULL              |                |
 | amount  | decimal(7,2)        | YES  |     | NULL              |                |
 | status  | tinyint(1)          | YES  |     | 1                 |                |
 | created | timestamp           | NO   |     | CURRENT_TIMESTAMP |                |
@@ -33,6 +34,8 @@ public class Transaccion {
     private Integer     coid;
     @Column
     private Integer     cdid;
+    @Column
+    private Integer     eid;
     @Column
     private Double      amount;
     @Column
@@ -67,6 +70,14 @@ public class Transaccion {
 
     public void setCdid(Integer cdid) {
         this.cdid = cdid;
+    }
+
+    public Integer getEid() {
+        return this.eid;
+    }
+
+    public void setEid(Integer eid) {
+        this.eid = eid;
     }
 
     public Double getAmount() {

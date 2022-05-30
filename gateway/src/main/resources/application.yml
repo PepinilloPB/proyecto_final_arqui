@@ -4,12 +4,12 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: usuario
-          uri: lb://USUARIO
+        - id: empleado
+          uri: lb://EMPLEADO
           predicates:
-            - Path=/usuario/**
+            - Path=/empleado/**
           filters:
-            - RewritePath=/usuario/(?<remaining>.*), /$\{remaining}
+            - RewritePath=/empleado/(?<remaining>.*), /$\{remaining}
         - id: transaccion
           uri: lb://TRANSACCION
           predicates:
