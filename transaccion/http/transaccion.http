@@ -1,0 +1,5 @@
+###Listar cuentas (sin gateway)
+GET http://localhost:8002/api/transaccion
+
+###Listar cuentas (con gateway)
+GET http://localhost:9000/transaccion/api/transaccion
