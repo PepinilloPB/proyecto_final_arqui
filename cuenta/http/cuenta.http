@@ -1,5 +1,27 @@
 ###Listar cuentas (sin gateway)
 GET http://localhost:8003/api/cuenta
 
+###Listar una cuenta (sin gateway)
+GET http://localhost:8003/api/cuenta/1
+
+###Crear cuenta (sin gateway)
+POST http://localhost:8003/api/cuenta
+Content-Type: application/json
+
+{
+    "name" : "Eddy4",
+    "amount" : 50.0
+}
+
+###Retiro o Deposito de dinero (sin gateway)
+PUT http://localhost:8003/api/cuenta/1
+Content-Type: application/json
+
+{
+    "amount" : -50.0
+}
+
+
 ###Listar cuentas (con gateway)
 GET http://localhost:9000/cuenta/api/cuenta
+

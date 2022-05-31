@@ -1,5 +1,7 @@
 package com.example.demo.dao;
 
+import java.util.Optional;
+
 import com.example.demo.dto.Cuenta;
 
 import org.springframework.data.domain.Page;
@@ -10,4 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CuentaDao extends JpaRepository<Cuenta, Integer>{
     Page<Cuenta> findAll(org.springframework.data.domain.Pageable pageable);
+    Optional<Cuenta> findById(Integer id);
 }

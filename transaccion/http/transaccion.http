@@ -1,5 +1,19 @@
 ###Listar cuentas (sin gateway)
 GET http://localhost:8002/api/transaccion
 
+###Crear transaccion (sin gateway)
+POST http://localhost:8002/api/transaccion
+Content-Type: application/json
+
+{
+    "eid": 1,
+    "coid" : 1,
+    "cdid" : 2,
+    "amount" : 10.0
+}
+
+
+
+
 ###Listar cuentas (con gateway)
 GET http://localhost:9000/transaccion/api/transaccion

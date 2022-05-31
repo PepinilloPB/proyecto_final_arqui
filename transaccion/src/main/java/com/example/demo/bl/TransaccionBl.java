@@ -1,5 +1,7 @@
 package com.example.demo.bl;
 
+import java.util.Optional;
+
 import com.example.demo.dao.TransaccionDao;
 import com.example.demo.dto.Transaccion;
 
@@ -18,6 +20,12 @@ public class TransaccionBl {
     public ResponseEntity<?> list(){
         Pageable pageable = PageRequest.of(0, 10);
         Page<Transaccion> transaccion = transaccionDao.findAll(pageable);
+        return ResponseEntity.ok(transaccion);
+    }
+
+    public ResponseEntity<?> create(Transaccion transaccion){
+        transaccion.setStatus(true);
+        transaccionDao.save(transaccion);
         return ResponseEntity.ok(transaccion);
     }
 }
