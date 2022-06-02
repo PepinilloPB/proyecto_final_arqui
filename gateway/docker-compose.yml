@@ -21,6 +21,8 @@ services:
     restart: always
     ports:
       - "3306:3306"
+    networks:
+      - arquitectura
     environment:
       - "MYSQL_ROOT_PASSWORD=12345"
       - "MYSQL_DATABASE=banco"
@@ -47,8 +49,6 @@ services:
       - arquitectura
     environment:
       - "EUREKA_URI=http://eureka:8761/eureka"
-    #environment:
-      #- "EUREKA_URI=http://localhost:8761/eureka"
     volumes:
       - "/tmp/local:/opt/arquitectura/logs"
     depends_on:
@@ -57,16 +57,14 @@ services:
 
   cuenta:
     image: cuenta
-    mem_limit: 500m
-    #ports:
-    #  - "9000:9000"
+    mem_limit: 300m
     networks:
       - software
       - arquitectura
     environment:
       - "EUREKA_URI=http://eureka:8761/eureka"
       - "CONFIG_URI=http://configuracion:8888"
-      - "DB_HOST=mysql"
+      - "DB_URI=jdbc:mysql://mysql:3306/banco?autoReconnect=true&useSSL=false"
     volumes:
       - "/tmp/local:/opt/arquitectura/logs"
     depends_on:
@@ -74,20 +72,39 @@ services:
         condition: service_started
       eureka:
         condition: service_started
-#  transaccion:
-#    image: transaccion
-#    mem_limit: 300m
-#    networks:
-#      - arquitectura
-#      - software
-#    environment:
-#      - "EUREKA_URI=http://eureka:8761/eureka"
-#      - "CONFIG_URI=http://configuracion:8888"
-#      - "DB_HOST=mysql"
-#    volumes:
-#      -"/tmp/local:/opt/arquitectura/logs"
-#    depends_on:
-#      mysql:
-#        condition: service_started
-#      eureka:
-#        condition: service_started
+
+  empleado:
+    image: empleado
+    mem_limit: 300m
+    networks:
+      - software
+      - arquitectura
+    environment:
+      - "EUREKA_URI=http://eureka:8761/eureka"
+      - "CONFIG_URI=http://configuracion:8888"
+      - "DB_URI=jdbc:mysql://mysql:3306/banco?autoReconnect=true&useSSL=false"
+    volumes:
+      - "/tmp/local:/opt/arquitectura/logs"
+    depends_on:
+      mysql:
+        condition: service_started
+      eureka:
+        condition: service_started
+
+  transaccion:
+    image: transaccion
+    mem_limit: 300m
+    networks:
+      - software
+      - arquitectura
+    environment:
+      - "EUREKA_URI=http://eureka:8761/eureka"
+      - "CONFIG_URI=http://configuracion:8888"
+      - "DB_URI=jdbc:mysql://mysql:3306/banco?autoReconnect=true&useSSL=false"
+    volumes:
+      - "/tmp/local:/opt/arquitectura/logs"
+    depends_on:
+      mysql:
+        condition: service_started
+      eureka:
+        condition: service_started
