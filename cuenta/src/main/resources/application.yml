@@ -1,5 +1,5 @@
 server:
-  port: 8003
+  port: ${SERVER_PORT:8003}
 
 eureka:
   client:
@@ -9,6 +9,9 @@ eureka:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
       
 spring:
+
+  application:
+    name: cuenta
 
   jpa:
     database: MYSQL
@@ -29,6 +32,3 @@ spring:
     #username: root
     #password: 12345
     #driverClassName: com.mysql.jdbc.Driver
-
-  application:
-    name: cuenta

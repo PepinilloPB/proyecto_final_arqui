@@ -1,0 +1,93 @@
+version: '2.4'
+
+networks:
+
+  arquitectura:
+    name: network_backend
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.30.0.0/16
+          gateway: 192.30.0.1
+
+  software:
+    name: network_config_server
+    external: true
+
+services:
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=12345"
+      - "MYSQL_DATABASE=banco"
+    #CAMBIAR LA DIRECCION DEL VOLUMEN
+    volumes:
+      - "/home/eddy/Desktop/Clases/Arqui/proyecto/db:/var/lib/mysql"
+
+  eureka:
+    image: eureka
+    mem_limit: 300m
+    ports:
+      - "8761:8761"
+    networks:
+      - software
+      - arquitectura
+
+  gateway:
+    image: gateway
+    mem_limit: 300m
+    ports:
+      - "9000:9000"
+    networks:
+      - software
+      - arquitectura
+    environment:
+      - "EUREKA_URI=http://eureka:8761/eureka"
+    #environment:
+      #- "EUREKA_URI=http://localhost:8761/eureka"
+    volumes:
+      - "/tmp/local:/opt/arquitectura/logs"
+    depends_on:
+      eureka:
+        condition: service_started
+
+  cuenta:
+    image: cuenta
+    mem_limit: 500m
+    #ports:
+    #  - "9000:9000"
+    networks:
+      - software
+      - arquitectura
+    environment:
+      - "EUREKA_URI=http://eureka:8761/eureka"
+      - "CONFIG_URI=http://configuracion:8888"
+      - "DB_HOST=mysql"
+    volumes:
+      - "/tmp/local:/opt/arquitectura/logs"
+    depends_on:
+      mysql:
+        condition: service_started
+      eureka:
+        condition: service_started
+#  transaccion:
+#    image: transaccion
+#    mem_limit: 300m
+#    networks:
+#      - arquitectura
+#      - software
+#    environment:
+#      - "EUREKA_URI=http://eureka:8761/eureka"
+#      - "CONFIG_URI=http://configuracion:8888"
+#      - "DB_HOST=mysql"
+#    volumes:
+#      -"/tmp/local:/opt/arquitectura/logs"
+#    depends_on:
+#      mysql:
+#        condition: service_started
+#      eureka:
+#        condition: service_started

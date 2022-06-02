@@ -8,6 +8,7 @@ COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app
 
 ENV EUREKA_URI "http://localhost:8761/eureka"
+#ENV EUREKA_URI "http://eureka:8761/eureka"
 ENV SERVER_PORT 9000
 
 ENTRYPOINT [ "java", \

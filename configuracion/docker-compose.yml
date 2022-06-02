@@ -1,0 +1,23 @@
+version: '2.4'
+networks:
+  software:
+    name: network_config_server
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.27.0.0/16
+          gateway: 172.27.0.1
+
+services:
+  configuracion:
+    image: configuracion
+    mem_limit: 300m
+    networks:
+      - software
+    ports:
+      - "8888:8888"
+    environment:
+      - "EUREKA_URI=http://eureka:8761/eureka"
+    volumes:
+      - "/tmp/local:/opt/arquitectura/logs"
+    
