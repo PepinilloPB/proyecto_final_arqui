@@ -115,3 +115,18 @@ services:
         condition: service_started
       eureka:
         condition: service_started
+
+  keycloak:
+    image: jboss:keycloak
+    mem_limit: 300m
+    networks:
+      - arquitectura
+    ports:
+      - "8080:8080"
+    environment:
+      - "KEYCLOAK_USER=admin"
+      - "KEYCLOAK_PASSWORD=admin"
+      - "KEYCLOAK_IMPORT=../keycloak/realm.json"
+    depends_on:
+      eureka:
+        condition: service_started
