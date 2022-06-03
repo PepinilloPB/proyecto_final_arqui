@@ -16,6 +16,13 @@ networks:
 
 services:
 
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - arquitectura
+
   mysql:
     image: mysql:5.7
     restart: always
