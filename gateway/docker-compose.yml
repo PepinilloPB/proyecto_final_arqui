@@ -23,6 +23,20 @@ services:
     networks:
       - arquitectura
 
+#  mysql:
+#    image: mysql:5.7
+#    restart: always
+#    ports:
+#      - "3306:3306"
+#    networks:
+#      - arquitectura
+#    command: "--init-file /data/application/database.sql"
+#    volumes:
+#        - "./init.sql:/data/application/database.sql"
+#    environment:
+#      - "MYSQL_ROOT_PASSWORD=12345"
+#      - "MYSQL_ROOT_USER=root"
+#      - "MYSQL_DATABASE=banco"
   mysql:
     image: mysql:5.7
     restart: always
@@ -30,26 +44,12 @@ services:
       - "3306:3306"
     networks:
       - arquitectura
-    command: "--init-file /data/application/database.sql"
-    volumes:
-        - "./init.sql:/data/application/database.sql"
     environment:
       - "MYSQL_ROOT_PASSWORD=12345"
-      - "MYSQL_ROOT_USER=root"
       - "MYSQL_DATABASE=banco"
-  # mysql:
-  #   image: mysql:5.7
-  #   restart: always
-  #   ports:
-  #     - "3306:3306"
-  #   networks:
-  #     - arquitectura
-  #   environment:
-  #     - "MYSQL_ROOT_PASSWORD=12345"
-  #     - "MYSQL_DATABASE=banco"
-  #   #CAMBIAR LA DIRECCION DEL VOLUMEN
-  #   volumes:
-  #     - "/home/eddy/Desktop/Clases/Arqui/proyecto/db:/var/lib/mysql"
+    #CAMBIAR LA DIRECCION DEL VOLUMEN
+    volumes:
+      - "/home/eddy/Desktop/Clases/Arqui/proyecto/db:/var/lib/mysql"
 
   eureka:
     image: eureka
@@ -59,6 +59,8 @@ services:
     networks:
       - software
       - arquitectura
+    volumes:
+      - "/tmp/local:/opt/arquitectura/logs"
 
   gateway:
     image: gateway
