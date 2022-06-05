@@ -23,20 +23,6 @@ services:
     networks:
       - arquitectura
 
-#  mysql:
-#    image: mysql:5.7
-#    restart: always
-#    ports:
-#      - "3306:3306"
-#    networks:
-#      - arquitectura
-#    command: "--init-file /data/application/database.sql"
-#    volumes:
-#        - "./init.sql:/data/application/database.sql"
-#    environment:
-#      - "MYSQL_ROOT_PASSWORD=12345"
-#      - "MYSQL_ROOT_USER=root"
-#      - "MYSQL_DATABASE=banco"
   mysql:
     image: mysql:5.7
     restart: always
@@ -44,12 +30,26 @@ services:
       - "3306:3306"
     networks:
       - arquitectura
-    environment:
-      - "MYSQL_ROOT_PASSWORD=12345"
-      - "MYSQL_DATABASE=banco"
-    #CAMBIAR LA DIRECCION DEL VOLUMEN
+    command: "--init-file /data/application/init.sql"
     volumes:
-      - "/home/eddy/Desktop/Clases/Arqui/proyecto/db:/var/lib/mysql"
+        - "./init.sql:/data/application/init.sql"
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_ROOT_USER: root
+      MYSQL_DATABASE: banco
+  # mysql:
+  #   image: mysql:5.7
+  #   restart: always
+  #   ports:
+  #     - "3306:3306"
+  #   networks:
+  #     - arquitectura
+  #   environment:
+  #     - "MYSQL_ROOT_PASSWORD=12345"
+  #     - "MYSQL_DATABASE=banco"
+  #   #CAMBIAR LA DIRECCION DEL VOLUMEN
+  #   volumes:
+  #     - "/home/eddy/Desktop/Clases/Arqui/proyecto/db:/var/lib/mysql"
 
   eureka:
     image: eureka
@@ -132,17 +132,18 @@ services:
       eureka:
         condition: service_started
 
-  # keycloak:
-  #   image: jboss:keycloak
-  #   mem_limit: 300m
-  #   networks:
-  #     - arquitectura
-  #   ports:
-  #     - "8080:8080"
-  #   environment:
-  #     - "KEYCLOAK_USER=admin"
-  #     - "KEYCLOAK_PASSWORD=admin"
-  #     - "KEYCLOAK_IMPORT=../keycloak/realm.json"
-  #   depends_on:
-  #     eureka:
-  #       condition: service_started
+  keycloak:
+    image: jboss/keycloak
+    mem_limit: 300m
+    networks:
+      - arquitectura
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./realm-export.json:/opt/jboss/keycloak/imports/realm-export.json
+    command: 
+      - "-b 0.0.0.0 -Dkeycloak.import=/opt/jboss/keycloak/imports/realm-export.json"
+    environment:
+      DB_VENDOR: h2
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
