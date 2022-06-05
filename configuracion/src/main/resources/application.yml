@@ -17,8 +17,14 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/pharaoh583/config_arqui.git
-          # ignore-local-ssh-settings: true
-          # host-key:
-          # host-key-algorithm: ecdsa-sha2-nistp256
-          # private-key:
+          # uri: https://github.com/pharaoh583/config_arqui.git
+          uri: git@github.com:pharaoh583/private_config.git
+          ignore-local-ssh-settings: true
+          host-key: "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBH2y17GUe6keBxOcBGNkWsliFwTRwUtQB3NXEhTAFLziGDfCgBV7B9Hp6GQMPGQXqMk7nnveA8vUz0D7ug5n04A="
+          host-key-algorithm: ecdsa-sha2-nistp256
+          private-key: |
+            -----BEGIN EC PRIVATE KEY-----
+            MHcCAQEEIBaNHbnvNCzAbMqmUl5WoDekoPKt4Mi36bc+pYrDBQYaoAoGCCqGSM49
+            AwEHoUQDQgAEKNfbFpucQepelBHXW/2SzLzquVU/Grv9P30j2nZq7Pnkq9R5ucTJ
+            70fypoKEnrObROQWVuBwDC9U/56eR8DZWQ==
+            -----END EC PRIVATE KEY-----
